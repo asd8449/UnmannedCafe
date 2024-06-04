@@ -1,18 +1,16 @@
-package bookmarket.view;
+package unmannedcafe.view;
 
 import java.util.Scanner;
 
-import bookmarket.model.BookStorage;
-import bookmarket.model.Cart;
-import bookmarket.model.Customer;
+import unmannedcafe.model.Cart;
+import unmannedcafe.model.User;
+import unmannedcafe.model.menu.DrinkStorage;
 
 public class ConsoleView {
 
 	// 환영 인사 출력
 	public void displayWelcome() {
-		String welcome = "*****************************************\n"
-				+ "*    Welcome to Hyejeong Book Market    *\n"
-				+ "*****************************************";
+		String welcome = "24시 무인 카페에 오신걸 환영합니다 ^.^";
 		System.out.println(welcome);	
 	}
 
@@ -42,10 +40,10 @@ public class ConsoleView {
 	}
 
 	// 도서 목록 보여주기
-	public void displayBookInfo(BookStorage bookStorage) {
-		for (int i = 0; i < bookStorage.getNumBooks(); i++) {
-			String bookInfo = bookStorage.getBookInfo(i);
-			System.out.println(bookInfo);
+	public void displayDrinkInfo(DrinkStorage drinkStorage) {
+		for (int i = 0; i < drinkStorage.getNumDrinks(); i++) {
+			String drinkInfo = drinkStorage.getDrinkInfo(i);
+			System.out.println(drinkInfo);
 		}
 	}
 
@@ -63,85 +61,83 @@ public class ConsoleView {
 	}
 
 	// bookStorage에 있는 책을 ID로 선택하기
-	public int selectBookId(BookStorage bookStorage) {
+	public int selectMenuId(DrinkStorage drinkStorage) {
 	
-		int bookId;
+		int id;
 		boolean result;
 		do {
-			System.out.print("추가할 도서의 ID를 입력하세요 : ");
-			bookId = readNumber();
-			result = bookStorage.isValidBook(bookId);
+			System.out.print("장바구니에 추가할 메뉴의 ID를 입력하세요 : ");
+			id = readNumber();
+			result = drinkStorage.isValidDrink(id);
 			if (!result)
-				System.out.print("잘못된 도서의 ID입니다.");
+				System.out.print("잘못된 ID입니다.");
 		} while (!result);
 		
-		return bookId;
+		return id;
 	}
 
 	// cart에 있는 책을 ID로 선택하기
-	public int selectBookId(Cart cart) {
+	public int selectMenuId(Cart cart) {
 		
-		int bookId;
+		int id;
 		boolean result;
 		do {
-			System.out.print("도서 ID 입력 : ");
-			bookId = readNumber();
-			result = cart.isValidItem(bookId);
+			System.out.print("메뉴 ID 입력 : ");
+			id = readNumber();
+			result = cart.isValidItem(id);
 			if (!result)
-				System.out.print("잘못된 도서의 ID입니다.");
+				System.out.print("잘못된 ID입니다.");
 		} while (!result);
 		
-		return bookId;
+		return id;
 	}
 
 	// 도서 수량 입력 받기
-	public int inputQuantity(int min, int max) {
+	public int inputQuantity() {
 		int number;
 		do {
-			System.out.print(">> 수량 입력 (" + min + " ~ " + max + "): ");
+			System.out.print(">> 수량 입력 (" + 0 + "이상 입력) : ");
 			number = readNumber();
-			if (number < min || number > max)
+			if (number < 0)
 				System.out.println("잘못된 수량입니다.");
-		} while (number < min || number > max);
+		} while (number < 0);
 		
 		return number;
 	}
 
 	// 고객 정보 입력 받기
-	public void inputCustomerInfo(Customer customer) {
+	public void inputCustomerInfo(User user) {
 		Scanner input = new Scanner(System.in);
-		System.out.println("온라인 서점을 이용하시려면 이름과 전화번호를 입력하세요.");
-		System.out.print(">> 이름 : ");
-		customer.setName(input.nextLine());
+		System.out.println("회원명과 적립번호(전화번호)를 입력해주세요.");
+		System.out.print(">> 회원명 : ");
+		user.setName(input.nextLine());
 		System.out.print(">> 전화번호 : ");
-		customer.setPhone(input.nextLine());
+		user.setPhone(input.nextLine());
 	}
 
 	// 배송 정보 입력 받기 - 주소와 이메일주소가 없는 경우
-	public void inputDeliveryInfo(Customer customer) {
-		if (customer.getEmail() == null) {
-			Scanner input = new Scanner(System.in);
-			System.out.println("배송을 위하여 이메일 주소와 배송받을 곳의 주소를 입력받습니다.");
-			System.out.print(">> 이메일 : ");
-			customer.setEmail(input.nextLine());
-			System.out.print(">> 주소 : ");
-			customer.setAddress(input.nextLine());
-		}
-	}
+//	public void inputDeliveryInfo(Customer customer) {
+//		if (customer.getEmail() == null) {
+//			Scanner input = new Scanner(System.in);
+//			System.out.println("배송을 위하여 이메일 주소와 배송받을 곳의 주소를 입력받습니다.");
+//			System.out.print(">> 이메일 : ");
+//			customer.setEmail(input.nextLine());
+//			System.out.print(">> 주소 : ");
+//			customer.setAddress(input.nextLine());
+//		}
+//	}
 	
-	public void displayOrder(Cart cart, Customer customer) {
+	public void displayOrder(Cart cart, User user) {
 		
 		System.out.println();
 		// 장바구니 보여주기
-		System.out.println("***** 주문할 도서 ******");
+		System.out.println("***** 주문 정보 ******");
 		displayCart(cart);
 		
 		// 배송 정보 보여주기 - 고객 이름, 전화번호, 주소, 이메일주소
-		System.out.println("***** 배송 정보 ******");
-		System.out.println(">> 이름 : " + customer.getName());
-		System.out.println(">> 전화번호 : " + customer.getPhone());
-		System.out.println(">> 이메일 : " + customer.getEmail());
-		System.out.println(">> 주소 : " + customer.getAddress());
+		System.out.println("***** 적립 확인 ******");
+		System.out.println(">> 회원명 : " + user.getName());
+		System.out.println(">> 전화번호 : " + user.getPhone());
 		System.out.println();
 
 	}

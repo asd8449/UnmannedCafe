@@ -1,6 +1,8 @@
-package bookmarket.model;
+package unmannedcafe.model;
 
 import java.util.ArrayList;
+
+import unmannedcafe.model.menu.Drink;
 
 public class Cart {
 	//private CartItem[] itemList = new CartItem[64];
@@ -23,29 +25,29 @@ public class Cart {
 		return itemList.get(index).toString();
 	}
 
-	public void addItem(Book book) {
+	public void addItem(Drink drink) {
 		
-		CartItem item = getCartItem(book);
+		CartItem item = getCartItem(drink);
 		if (item == null) {
-			itemList.add(new CartItem(book));
+			itemList.add(new CartItem(drink));
 		}
 		else {
 			item.addQuantity(1);
 		}
 	}
 	
-	private CartItem getCartItem(Book book) {
+	private CartItem getCartItem(Drink drink) {
 		
 		for (CartItem item : itemList) {
-			if (item.getBook() == book) return item;
+			if (item.getDrink() == drink) return item;
 		}
 		
 		return null;
 	}
 	
-	private CartItem getCartItem(int bookId) {
+	private CartItem getCartItem(int id) {
 		for (CartItem item : itemList) {
-			if (item.bookId == bookId) return item;
+			if (item.menuId == id) return item;
 		}
 		return null;
 	}
@@ -55,24 +57,24 @@ public class Cart {
 		itemList.clear();
 	}
 
-	public boolean isValidItem(int bookId) {
+	public boolean isValidItem(int id) {
 		for (CartItem item : itemList) {
-			if (item.bookId == bookId) return true;
+			if (item.menuId == id) return true;
 		}
 		return false;
 	}
 
-	public void deleteItem(int bookId) {
-		CartItem item = getCartItem(bookId);
+	public void deleteItem(int id) {
+		CartItem item = getCartItem(id);
 		itemList.remove(item);
 	}
 
-	public void updateQuantity(int bookId, int quantity) {
+	public void updateQuantity(int id, int quantity) {
 		
 		if (quantity == 0)
-			deleteItem(bookId);
+			deleteItem(id);
 		else {
-			CartItem item = getCartItem(bookId);
+			CartItem item = getCartItem(id);
 			item.setQuantity(quantity);
 		}
 		

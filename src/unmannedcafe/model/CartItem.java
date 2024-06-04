@@ -1,21 +1,23 @@
-package bookmarket.model;
+package unmannedcafe.model;
+
+import unmannedcafe.model.menu.Drink;
 
 public class CartItem {
-	Book book;
-	int bookId;
+	Drink drink;
+	int menuId;
 	int quantity;
 	
-	public CartItem(Book book) {
-		this.book = book;
-		this.bookId = book.getBookId();
+	public CartItem(Drink drink) {
+		this.drink = drink;
+		this.menuId = drink.getMenuId();
 		this.quantity = 1;
 	}
 	
-	public Book getBook() {
-		return book;
+	public Drink getDrink() {
+		return drink;
 	}
-	public void setBook(Book book) {
-		this.book = book;
+	public void setDrink(Drink drink) {
+		this.drink = drink;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -31,11 +33,11 @@ public class CartItem {
 
 	@Override
 	public String toString() {
-		return book.getBookId() + ", " + book.getTitle() + ", " + quantity + "권, " + getPrice() + "원";
+		return drink.getMenuId() + ", " + drink.getName() + ", " + quantity + "잔, " + getPrice() + "원";
 	}
 
 	public int getPrice() {
-		return quantity * book.getPrice();
+		return quantity * drink.getPrice();
 	}
 	
 	

@@ -1,8 +1,8 @@
 package unmannedcafe.controller;
 
-import unmannedcafe.model.DrinkStorage;
 import unmannedcafe.model.Cart;
-import unmannedcafe.model.Customer;
+import unmannedcafe.model.menu.DrinkStorage;
+import unmannedcafe.model.User;
 import unmannedcafe.view.ConsoleView;
 
 public class UnmannedCafeController {
@@ -10,7 +10,7 @@ public class UnmannedCafeController {
 	ConsoleView view;
 	DrinkStorage drinkStorage;
 	Cart mCart;
-	Customer mCustomer;
+	User mUser;
 	
 	String[] menuList = {
 			"0. 종료",
@@ -32,7 +32,6 @@ public class UnmannedCafeController {
 
 	public void start() {
 		welcome();
-		registerCustomerInfo();
 		
 		int menu;
 		
@@ -40,11 +39,11 @@ public class UnmannedCafeController {
 			menu = view.selectMenu(menuList);
 			
 			switch (menu) {
-			case 1 -> viewBookInfo();
+			case 1 -> viewMenuInfo();
 			case 2 -> viewCart();
-			case 3 -> addBook2Cart();
-			case 4 -> deleteBookInCart();
-			case 5 -> updateBookInCart();
+			case 3 -> addMenu2Cart();
+			case 4 -> deleteMenuInCart();
+			case 5 -> updateMenuInCart();
 			case 6 -> resetCart();
 			case 7 -> order();
 			case 8 -> adminMode();
@@ -72,14 +71,14 @@ public class UnmannedCafeController {
 	}
 	
 	// 고객 정보 등록
-	private void registerCustomerInfo() {
-		mCustomer = new Customer();
-		view.inputCustomerInfo(mCustomer);
+	private void registerUserInfo() {
+		mUser = new User();
+		view.inputCustomerInfo(mUser);
 	}
 
 	// 도서 정보 보기
-	private void viewBookInfo() {
-		view.displayBookInfo(mBookStorage);
+	private void viewMenuInfo() {
+		view.displayDrinkInfo(drinkStorage);
 	}
 	
 	// 장바구니 보기
@@ -88,39 +87,39 @@ public class UnmannedCafeController {
 	}
 
 	// 장바구니에 도서 추가
-	private void addBook2Cart() {
-		view.displayBookInfo(mBookStorage);
-		int bookId = view.selectBookId(mBookStorage);
-		mCart.addItem(mBookStorage.getBookId(bookId));
-		view.showMessage(">>장바구니에 도서를 추가하였습니다.");	
+	private void addMenu2Cart() {
+		view.displayDrinkInfo(drinkStorage);
+		int id = view.selectMenuId(drinkStorage);
+		mCart.addItem(drinkStorage.getDrinkById(id));
+		view.showMessage(">>장바구니에 메뉴를 추가하였습니다.");	
 	}
 	
 	// 장바구니 도서 삭제
-	private void deleteBookInCart() {
+	private void deleteMenuInCart() {
 		// 장바구니 보여주기
 		view.displayCart(mCart);
 		if (!mCart.isEmpty()) {
 			// 도서 ID 입력 받기
-			int bookId = view.selectBookId(mCart);
-			if (view.askConfirm(">> 해당 도서를 삭제하려면 yes를 입력하세요 : ", "yes")) {
+			int id = view.selectMenuId(mCart);
+			if (view.askConfirm(">> 해당 메뉴를 삭제하려면 y를 입력하세요 : ", "y")) {
 				// 해당 도서 ID의 cartItem 삭제
-				mCart.deleteItem(bookId);
-				view.showMessage(">> 해당 도서를 삭제했습니다.");
+				mCart.deleteItem(id);
+				view.showMessage(">> 삭제완료");
 			}
 		}
 	}
 	
 	// 장바구니 도서 수량 변경
-	private void updateBookInCart() {
+	private void updateMenuInCart() {
 		// 장바구니 보여주기
 		view.displayCart(mCart);
 		if (!mCart.isEmpty()) {
 			// 도서 ID 입력 받기
-			int bookId = view.selectBookId(mCart);
+			int id = view.selectMenuId(mCart);
 			// 수량 입력 받기
-			int quantity = view.inputQuantity(0, mBookStorage.getMaxQuantity());
+			int quantity = view.inputQuantity();
 			// 도서 ID에 해당하는 cartItem 가져와서 cartItem quantity set 수량
-			mCart.updateQuantity(bookId, quantity);
+			mCart.updateQuantity(id, quantity);
 		}
 	}
 
@@ -145,22 +144,23 @@ public class UnmannedCafeController {
 		viewOrderInfo();
 		// 진짜 주문할거니?
 		if (view.askConfirm("진짜 주문하려면 yes를 입력하세요 : ", "yes") ) {
+			registerUserInfo();
 			// 주문 처리 -> 장바구니 초기화
 			mCart.resetCart();
 		}
 	}
 	
 	private void getDeliveryInfo() {
-		view.inputDeliveryInfo(mCustomer);	
+		//view.inputDeliveryInfo(mUser);	
 	}
 
 	private void viewOrderInfo() {
-		view.displayOrder(mCart, mCustomer);
+		view.displayOrder(mCart, mUser);
 	}
 	
 	// 종료
 	private void end() {
-		view.showMessage(">> Hyejeong Book Market을 종료합니다.");
+		view.showMessage(">>방문해주셔서 감사합니다.");
 	}
 
 
