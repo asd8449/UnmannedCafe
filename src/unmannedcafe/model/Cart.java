@@ -5,11 +5,9 @@ import unmannedcafe.model.menu.Dessert;
 import unmannedcafe.model.menu.Drink;
 
 public class Cart {
-	// private CartItem[] itemList = new CartItem[64];
 	private ArrayList<CartItem> itemList = new ArrayList<>();
 	Drink drink;
 	Dessert dessert;
-	// private int numItems = 0;
 
 	public boolean isEmpty() {
 		return itemList.isEmpty();
@@ -33,13 +31,11 @@ public class Cart {
 		if (item == null) {
 			itemList.add(new CartItem(drink));
 
-		}
-		else {
+		} else {
 
 			item.addQuantity(1);
 		}
 	}
-
 
 	public void addItem(Dessert dessert) {
 
@@ -50,15 +46,15 @@ public class Cart {
 			item.addQuantity(1);
 		}
 	}
+
 	private CartItem getCartItem(Drink drink) {
-		
+
 		for (CartItem item : itemList) {
-			if (item.getDrink() == drink) return item;
+			if (item.getDrink() == drink)
+				return item;
 		}
 		return null;
 	}
-
-
 
 	private CartItem getCartItem(Dessert dessert) {
 
@@ -71,14 +67,9 @@ public class Cart {
 		return null;
 	}
 
-	private CartItem getCartItem(int id) {
-		for (CartItem item : itemList) {
-			if (item.menuId == id)
-				return item;
-
-			if (item.menuId == id) return item;
-
-		}
+	private CartItem getCartItem2Num(int num) {
+		if (num <= itemList.size())
+			return itemList.get(num - 1);
 		return null;
 	}
 
@@ -86,39 +77,22 @@ public class Cart {
 		itemList.clear();
 	}
 
-	public boolean isValidItem(int id) {
-		for (CartItem item : itemList) {
-
-			if (item.menuId == id)
-				return true;
-
-			if (item.menuId == id) return true;
-
-		}
-		return false;
-	}
-
-
 	public boolean checkCartItem(int num) {
 		if (itemList.size() >= num)
 			return true;
 		return false;
 	}
 
-
-
 	public void deleteItem(int num) {
 		itemList.remove(num);
 	}
 
+	public void updateQuantity(int num, int quantity) {
 
-
-	public void updateQuantity(int id, int quantity) {
-		
 		if (quantity == 0)
-			deleteItem(id);
+			deleteItem(num);
 		else {
-			CartItem item = getCartItem(id);
+			CartItem item = getCartItem2Num(num);
 			item.setQuantity(quantity);
 		}
 

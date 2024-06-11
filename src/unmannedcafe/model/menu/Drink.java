@@ -1,7 +1,6 @@
 package unmannedcafe.model.menu;
 
 public class Drink extends Menu{
-	private final int tag = 1;
 	private int ml;//용량
 	public Drink(int id, String name, int ml, int price) {
 		super(id, name, price);

@@ -11,10 +11,12 @@ public class DrinkStorage {
 	ArrayList<Drink> DrinkList = new ArrayList<>();
 	private String fileName = "drinklist.txt";
 	private int lastId;
+	public boolean isSaved;
 
 	public DrinkStorage() throws IOException {
 		loadDrinkListFromFile();
 		generatedLastId();
+		isSaved = true;
 	}
 
 	private void generatedLastId() {
@@ -78,10 +80,12 @@ public class DrinkStorage {
 
 	public void deleteItem(int id) {
 		DrinkList.remove(getDrinkById(id));
+		isSaved = false;
 	}
 
 	public void addDrink(String name, int ml, int price) {
 		Drink drink = new Drink(++lastId, name, ml, price);
+		isSaved = false;
 	}
 
 	public void saveDrink2File() {
@@ -93,6 +97,7 @@ public class DrinkStorage {
 				if (id > lastId)
 					lastId = id;
 			}
+			isSaved = true;
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

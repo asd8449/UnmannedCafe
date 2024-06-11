@@ -11,7 +11,7 @@ public class ConsoleView {
 
 	// 환영 인사 출력
 	public void displayWelcome() {
-		String welcome = "24시 무인 카페에 오신걸 환영합니다 ^.^";
+		String welcome = "24시 무인 카페에 오신걸 환영합니다.";
 		System.out.println(welcome);	
 	}
 
@@ -40,14 +40,14 @@ public class ConsoleView {
 		System.out.println("=========================================");
 	}
 
-	// 도서 목록 보여주기
+	// 음료 목록 보여주기
 	public void displayDrinkInfo(DrinkStorage drinkStorage) {
 		for (int i = 0; i < drinkStorage.getNumDrinks(); i++) {
 			String drinkInfo = drinkStorage.getDrinkInfo(i);
 			System.out.println(drinkInfo);
 		}
 	}
-	
+	// 디저트 목록 보여주기
 	public void displayDessertInfo(DessertStorage dessertStorage) {
 		for (int i = 0; i < dessertStorage.getNumDesserts(); i++) {
 			String dessertInfo = dessertStorage.getDessertInfo(i);
@@ -68,13 +68,13 @@ public class ConsoleView {
 		System.out.println("총 금액 : " + cart.getTotalPrice() + "원");
 	}
 
-	// bookStorage에 있는 책을 ID로 선택하기
+	// 입력받은 매개변수에 따라 같은 이름의 다른 메서드 실행(오버로딩) 
 	public int selectMenuId(DrinkStorage drinkStorage) {
 	
 		int id;
 		boolean result;
 		do {
-			System.out.print("장바구니에 추가할 메뉴의 ID를 입력하세요 : ");
+			System.out.print("장바구니에 추가할 음료의 ID를 입력하세요 : ");
 			id = readNumber();
 			result = drinkStorage.isValidDrink(id);
 			if (!result)
@@ -89,7 +89,7 @@ public class ConsoleView {
 		int id;
 		boolean result;
 		do {
-			System.out.print("장바구니에 추가할 메뉴의 ID를 입력하세요 : ");
+			System.out.print("장바구니에 추가할 디저트의 ID를 입력하세요 : ");
 			id = readNumber();
 			result = dessertStorage.isValidDessert(id);
 			if (!result)
@@ -98,26 +98,21 @@ public class ConsoleView {
 		
 		return id;
 	}
-
-	// cart에 있는 메뉴를 선택하기
-	// cart에 있는 책을 ID로 선택하기
-
-	public int selectMenuId(Cart cart) {
-		
-		int id;
+	// 장바구니에 있는 메뉴의 번호를 입력 받기
+	public int selectMenuNum(Cart cart) {
+		int num;
 		boolean result;
 		do {
-			System.out.print("메뉴 ID 입력 : ");
-			id = readNumber();
-			result = cart.isValidItem(id);
+			System.out.print("메뉴 번호 입력 : ");
+			num = readNumber();
+			result = cart.checkCartItem(num);
 			if (!result)
-				System.out.print("잘못된 ID입니다.");
+				System.out.print("잘못된 입력입니다.\n");
 		} while (!result);
-		
-		return id;
+		return num;
 	}
 
-	// 도서 수량 입력 받기
+	// 메뉴 수량 입력 받기
 	public int inputQuantity() {
 		int number;
 		do {
@@ -159,7 +154,7 @@ public class ConsoleView {
 		System.out.println("***** 주문 정보 ******");
 		displayCart(cart);
 		
-		// 배송 정보 보여주기 - 고객 이름, 전화번호, 주소, 이메일주소
+		// 주문 정보 보여주기 - 회원명, 전화번호(적립번호)
 		System.out.println("***** 적립 확인 ******");
 		System.out.println(">> 회원명 : " + user.getName());
 		System.out.println(">> 전화번호 : " + user.getPhone());
@@ -181,8 +176,20 @@ public class ConsoleView {
 	}
 	
 	// 숫자 입력 받기 (숫자가 아닌 문자를 넣으면 예외 처리하고 다시 입력받기)
-	private int readNumber() {
+	public int readNumber() {
 		Scanner input = new Scanner(System.in);
+		try {
+			int number = input.nextInt();
+			return number;
+		} catch (Exception e) {
+			System.out.print("숫자를 입력하세요 :");
+			return readNumber();
+		}
+	}
+	
+	public int readNumber(String message) {
+		Scanner input = new Scanner(System.in);
+		showMessage(message);
 		try {
 			int number = input.nextInt();
 			return number;
@@ -204,17 +211,6 @@ public class ConsoleView {
 		return sc.nextLine();
 	}
 
-	public int selectMenuNum(Cart cart) {
-		int num;
-		boolean result;
-		do {
-			System.out.print("메뉴 번호 입력 : ");
-			num = readNumber();
-			result = cart.checkCartItem(num);
-			if (!result)
-				System.out.print("잘못된 입력입니다.\n");
-		} while (!result);
-		return num;
-	}
+
 	
 }

@@ -11,9 +11,11 @@ public class DessertStorage {
 	ArrayList<Dessert> DessertList = new ArrayList<>();
 	private String fileName = "dessertlist.txt";
 	private int lastId;
+	public boolean isSaved;
 	public DessertStorage() throws IOException {
 		loadDessertListFromFile();
 		generatedLastId();
+		isSaved = true;
 	}
 
 	private void generatedLastId() {
@@ -76,10 +78,12 @@ public class DessertStorage {
 	
 	public void deleteItem(int id) {
 		DessertList.remove(getDessertById(id));
+		isSaved = false;
 	}
 	
 	public void addDessert(String name, int price) {
 		Dessert dessert = new Dessert(++lastId, name, price);
+		isSaved = false;
 	}
 	
 	public void saveDessert2File() {
@@ -90,6 +94,7 @@ public class DessertStorage {
 				fw.write(dessert.getName() + "\n");
 				fw.write(dessert.getPrice() + "\n");
 			}
+			isSaved = true;
 			fw.close();
 		}catch(IOException e) {
 			e.printStackTrace();
