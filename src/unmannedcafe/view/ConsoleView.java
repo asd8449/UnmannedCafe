@@ -4,10 +4,7 @@ import java.util.Scanner;
 
 import unmannedcafe.model.Cart;
 import unmannedcafe.model.User;
-<<<<<<< HEAD
 import unmannedcafe.model.menu.DessertStorage;
-=======
->>>>>>> refs/remotes/origin/master
 import unmannedcafe.model.menu.DrinkStorage;
 
 public class ConsoleView {
@@ -48,7 +45,6 @@ public class ConsoleView {
 		for (int i = 0; i < drinkStorage.getNumDrinks(); i++) {
 			String drinkInfo = drinkStorage.getDrinkInfo(i);
 			System.out.println(drinkInfo);
-<<<<<<< HEAD
 		}
 	}
 	
@@ -56,8 +52,6 @@ public class ConsoleView {
 		for (int i = 0; i < dessertStorage.getNumDesserts(); i++) {
 			String dessertInfo = dessertStorage.getDessertInfo(i);
 			System.out.println(dessertInfo);
-=======
->>>>>>> refs/remotes/origin/master
 		}
 	}
 
@@ -88,8 +82,8 @@ public class ConsoleView {
 		} while (!result);
 		
 		return id;
-<<<<<<< HEAD
 	}
+	
 	public int selectMenuId(DessertStorage dessertStorage) {
 		
 		int id;
@@ -103,15 +97,11 @@ public class ConsoleView {
 		} while (!result);
 		
 		return id;
-=======
->>>>>>> refs/remotes/origin/master
 	}
 
-<<<<<<< HEAD
 	// cart에 있는 메뉴를 선택하기
-=======
 	// cart에 있는 책을 ID로 선택하기
->>>>>>> refs/remotes/origin/master
+
 	public int selectMenuId(Cart cart) {
 		
 		int id;

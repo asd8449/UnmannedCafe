@@ -55,23 +55,12 @@ public class Cart {
 		for (CartItem item : itemList) {
 			if (item.getDrink() == drink) return item;
 		}
-	}
-
-	private CartItem getCartItem(Dessert dessert) {
-		for (CartItem item : itemList) {
-			if (item.getDrink() == drink)
-				return item;
-		}
-
 		return null;
 	}
 
 
+
 	private CartItem getCartItem(Dessert dessert) {
-
-
-	
-	private CartItem getCartItem(int id) {
 
 		for (CartItem item : itemList) {
 
@@ -116,11 +105,6 @@ public class Cart {
 		return false;
 	}
 
-	public void deleteItem(int id) {
-		CartItem item = getCartItem(id);
-		itemList.remove(item);
-
-	}
 
 
 	public void deleteItem(int num) {
@@ -131,7 +115,6 @@ public class Cart {
 
 	public void updateQuantity(int id, int quantity) {
 		
-
 		if (quantity == 0)
 			deleteItem(id);
 		else {

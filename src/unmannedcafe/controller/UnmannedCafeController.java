@@ -146,6 +146,8 @@ public class UnmannedCafeController {
 				// 해당 도서 ID의 cartItem 삭제
 				mCart.deleteItem(cartListNum - 1);
 				view.showMessage(">> 삭제완료");
+			}else {
+				System.out.println("취소되었습니다.");
 			}
 		}
 	}

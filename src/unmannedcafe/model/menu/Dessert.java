@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package unmannedcafe.model.menu;
 
 public class Dessert extends Menu{
@@ -13,14 +12,4 @@ public class Dessert extends Menu{
 	}
 	
 }
-=======
-package unmannedcafe.model.menu;
 
-public class Dessert {
-	private final int tag = 2;
-	private int menuId;
-	private String name;
-	private int price;
-	
-}
->>>>>>> refs/remotes/origin/master
