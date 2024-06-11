@@ -1,11 +1,16 @@
-package bookmarket.model;
+package unmannedcafe.model;
 
 import java.util.ArrayList;
 
+import unmannedcafe.model.menu.Dessert;
+import unmannedcafe.model.menu.Drink;
+
 public class Cart {
-	//private CartItem[] itemList = new CartItem[64];
+	// private CartItem[] itemList = new CartItem[64];
 	private ArrayList<CartItem> itemList = new ArrayList<>();
-	//private int numItems = 0;
+	Drink drink;
+	Dessert dessert;
+	// private int numItems = 0;
 
 	public boolean isEmpty() {
 		return itemList.isEmpty();
@@ -20,62 +25,88 @@ public class Cart {
 	}
 
 	public String getItemInfo(int index) {
-		return itemList.get(index).toString();
+		return itemList.get(index).toString(index + 1);
 	}
 
-	public void addItem(Book book) {
-		
-		CartItem item = getCartItem(book);
+	public void addItem(Drink drink) {
+
+		CartItem item = getCartItem(drink);
 		if (item == null) {
-			itemList.add(new CartItem(book));
-		}
-		else {
+			itemList.add(new CartItem(drink));
+		} else {
 			item.addQuantity(1);
 		}
 	}
-	
-	private CartItem getCartItem(Book book) {
-		
-		for (CartItem item : itemList) {
-			if (item.getBook() == book) return item;
+
+	public void addItem(Dessert dessert) {
+
+		CartItem item = getCartItem(dessert);
+		if (item == null) {
+			itemList.add(new CartItem(dessert));
+		} else {
+			item.addQuantity(1);
 		}
-		
+	}
+
+	private CartItem getCartItem(Drink drink) {
+
+		for (CartItem item : itemList) {
+			if (item.getDrink() == drink)
+				return item;
+		}
+
 		return null;
 	}
-	
-	private CartItem getCartItem(int bookId) {
+
+	private CartItem getCartItem(Dessert dessert) {
+
 		for (CartItem item : itemList) {
-			if (item.bookId == bookId) return item;
+			if (item.getDessert() == dessert)
+				return item;
+		}
+
+		return null;
+	}
+
+	private CartItem getCartItem(int id) {
+		for (CartItem item : itemList) {
+			if (item.menuId == id)
+				return item;
 		}
 		return null;
 	}
-	
 
 	public void resetCart() {
 		itemList.clear();
 	}
 
-	public boolean isValidItem(int bookId) {
+	public boolean isValidItem(int id) {
 		for (CartItem item : itemList) {
-			if (item.bookId == bookId) return true;
+			if (item.menuId == id)
+				return true;
 		}
 		return false;
 	}
 
-	public void deleteItem(int bookId) {
-		CartItem item = getCartItem(bookId);
-		itemList.remove(item);
+	public boolean checkCartItem(int num) {
+		if (itemList.size() >= num)
+			return true;
+		return false;
 	}
 
-	public void updateQuantity(int bookId, int quantity) {
-		
+	public void deleteItem(int num) {
+		itemList.remove(num);
+	}
+
+	public void updateQuantity(int id, int quantity) {
+
 		if (quantity == 0)
-			deleteItem(bookId);
+			deleteItem(id);
 		else {
-			CartItem item = getCartItem(bookId);
+			CartItem item = getCartItem(id);
 			item.setQuantity(quantity);
 		}
-		
+
 	}
 
 	public int getTotalPrice() {
@@ -86,8 +117,4 @@ public class Cart {
 		return totalPrice;
 	}
 
-	
-	
 }
-
-
