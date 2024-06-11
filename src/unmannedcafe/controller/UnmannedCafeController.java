@@ -156,11 +156,11 @@ public class UnmannedCafeController {
 		view.displayCart(mCart);
 		if (!mCart.isEmpty()) {
 			// 도서 ID 입력 받기
-			int id = view.selectMenuId(mCart);
+			int num = view.selectMenuNum(mCart);
 			// 수량 입력 받기
 			int quantity = view.inputQuantity();
 			// 도서 ID에 해당하는 cartItem 가져와서 cartItem quantity set 수량
-			mCart.updateQuantity(id, quantity);
+			mCart.updateQuantity(num, quantity);
 		}
 	}
 

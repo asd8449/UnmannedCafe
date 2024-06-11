@@ -19,7 +19,6 @@ public class DrinkStorage {
 	private void generatedLastId() {
 		lastId = 0;
 		for(Drink drink : DrinkList) {
-<<<<<<< HEAD
 			int id = drink.getID();
 			if(id>lastId)
 				lastId = id;
