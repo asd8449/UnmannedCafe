@@ -1,10 +1,7 @@
 package unmannedcafe.controller;
 
 import unmannedcafe.model.Cart;
-<<<<<<< HEAD
 import unmannedcafe.model.menu.DessertStorage;
-=======
->>>>>>> refs/remotes/origin/master
 import unmannedcafe.model.menu.DrinkStorage;
 import unmannedcafe.model.User;
 import unmannedcafe.view.ConsoleView;
@@ -16,15 +13,12 @@ public class UnmannedCafeController {
 	DessertStorage dessertStorage;
 	Cart mCart;
 	User mUser;
-<<<<<<< HEAD
 	
 	String[] categoryList = {
 			"0. 뒤로가기",
 			"1. 음료",
 			"2. 디저트"
 	};
-=======
->>>>>>> refs/remotes/origin/master
 	
 	String[] menuList = {
 			"0. 종료",
@@ -55,7 +49,6 @@ public class UnmannedCafeController {
 			menu = view.selectMenu(menuList);
 			
 			switch (menu) {
-<<<<<<< HEAD
 			case 1 -> viewDrinkInfo();
 			case 2 -> viewDessertInfo();
 			case 3 -> viewCart();
@@ -65,16 +58,6 @@ public class UnmannedCafeController {
 			case 7 -> resetCart();
 			case 8 -> order();
 			case 9 -> adminMode();
-=======
-			case 1 -> viewMenuInfo();
-			case 2 -> viewCart();
-			case 3 -> addMenu2Cart();
-			case 4 -> deleteMenuInCart();
-			case 5 -> updateMenuInCart();
-			case 6 -> resetCart();
-			case 7 -> order();
-			case 8 -> adminMode();
->>>>>>> refs/remotes/origin/master
 			case 0 -> end();
 			default -> view.showMessage("잘못된 메뉴 번호입니다.");
 			}
@@ -105,17 +88,12 @@ public class UnmannedCafeController {
 	}
 
 	// 도서 정보 보기
-<<<<<<< HEAD
 	private void viewDrinkInfo() {
 		view.displayDrinkInfo(drinkStorage);
 	}
 	
 	private void viewDessertInfo() {
 		view.displayDessertInfo(dessertStorage);
-=======
-	private void viewMenuInfo() {
-		view.displayDrinkInfo(drinkStorage);
->>>>>>> refs/remotes/origin/master
 	}
 	
 	// 장바구니 보기
@@ -125,7 +103,6 @@ public class UnmannedCafeController {
 
 	// 장바구니에 도서 추가
 	private void addMenu2Cart() {
-<<<<<<< HEAD
 		int category;
 		do {
 			category = view.selectMenu(categoryList);
@@ -138,12 +115,6 @@ public class UnmannedCafeController {
 			}
 		} while (category != 0);
 
-=======
-		view.displayDrinkInfo(drinkStorage);
-		int id = view.selectMenuId(drinkStorage);
-		mCart.addItem(drinkStorage.getDrinkById(id));
-		view.showMessage(">>장바구니에 메뉴를 추가하였습니다.");	
->>>>>>> refs/remotes/origin/master
 	}
 	
 	private void selectDrink(int categ) {
@@ -169,20 +140,11 @@ public class UnmannedCafeController {
 		// 장바구니 보여주기
 		view.displayCart(mCart);
 		if (!mCart.isEmpty()) {
-<<<<<<< HEAD
 			// 장바구니 번호 입력
 			int cartListNum = view.selectMenuNum(mCart);
-=======
-			// 도서 ID 입력 받기
-			int id = view.selectMenuId(mCart);
->>>>>>> refs/remotes/origin/master
 			if (view.askConfirm(">> 해당 메뉴를 삭제하려면 y를 입력하세요 : ", "y")) {
 				// 해당 도서 ID의 cartItem 삭제
-<<<<<<< HEAD
 				mCart.deleteItem(cartListNum - 1);
-=======
-				mCart.deleteItem(id);
->>>>>>> refs/remotes/origin/master
 				view.showMessage(">> 삭제완료");
 			}
 		}
