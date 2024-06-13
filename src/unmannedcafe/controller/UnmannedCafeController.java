@@ -155,7 +155,7 @@ public class UnmannedCafeController {
 
 	}
 
-	private void selectDrink(int categ) {// 수정 예정 이였지만 안해~
+	private void selectDrink(int categ) {
 		view.displayDrinkInfo(drinkStorage);
 		int id = view.selectMenuId(drinkStorage);
 		mCart.addItem(drinkStorage.getDrinkById(id));
